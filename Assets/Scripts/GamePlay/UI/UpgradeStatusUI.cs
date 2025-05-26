@@ -17,6 +17,7 @@ public class UpgradeStatusUI : MonoBehaviour {
     [SerializeField] private TMP_Text scoreBonusText;
     [SerializeField] private TMP_Text doubleScoreText;
     [SerializeField] private TMP_Text doubleRankText;
+    [SerializeField] private TMP_Text ricochetChanceText;
 
     [Header("Upgrade Info Text")]
     [SerializeField] private TMP_Text upgradeInfoText;
@@ -34,6 +35,7 @@ public class UpgradeStatusUI : MonoBehaviour {
     { UpgradeType.ScoreBonus, "Score Bonus" },
     { UpgradeType.DoubleScoreChance, "Score x2" },
     { UpgradeType.DoubleExpChance, "Rank exp x2" },
+    { UpgradeType.RicochetChance, "Ricochet Chance" }
     };
 
     public string AsPercent(float value) => $"{value * 100f:0}%";
@@ -51,6 +53,7 @@ public class UpgradeStatusUI : MonoBehaviour {
             { UpgradeType.ScoreBonus, scoreBonusText },
             { UpgradeType.DoubleScoreChance, doubleScoreText },
             { UpgradeType.DoubleExpChance, doubleRankText },
+            { UpgradeType.RicochetChance, ricochetChanceText }
         };
     }
 
@@ -74,6 +77,8 @@ public class UpgradeStatusUI : MonoBehaviour {
 
         doubleScoreText.text = $"{labelMap[UpgradeType.DoubleScoreChance]}: {AsPercent(upgradeManager.doubleScore)}";
         doubleRankText.text = $"{labelMap[UpgradeType.DoubleExpChance]}: {AsPercent(upgradeManager.doubleHuntRank)}";
+
+        ricochetChanceText.text = $"{labelMap[UpgradeType.RicochetChance]}: {AsPercent(upgradeManager.ricochetChance)}";
     }
 
     public void Highlight(UpgradeType type) {

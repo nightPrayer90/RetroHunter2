@@ -119,7 +119,6 @@ MonoBehaviour:
     m_Bits: 128
   escapeYThreshold: -200
   checkEscapeInterval: 5
-  destroyOnEscape: 1
   spriteRenderer: {fileID: 3315680128923978424}
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.1
@@ -157,9 +156,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHealth: {fileID: 2191954497657643321}
-  baseStepDistance: 2
+  baseStepDistance: 2.5
   distanceScatter: 0.5
-  baseStepInterval: 0.7
+  baseStepInterval: 0.6
   intervalScatter: 0.4
   startDelay: 0.2
   shadowProjector: {fileID: 8391170504521261979}

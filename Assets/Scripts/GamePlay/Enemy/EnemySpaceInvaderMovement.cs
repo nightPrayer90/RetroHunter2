@@ -55,16 +55,7 @@ public class SpaceInvaderMovement : MonoBehaviour {
         moveSpeed = Mathf.Max(0.1f, baseMoveSpeed + Random.Range(-speedScatter, speedScatter));
         maxDistance = Mathf.Max(0.5f, baseMaxDistance + Random.Range(-distanceScatter, distanceScatter));
 
-        GameObject[] walkers = GameObject.FindGameObjectsWithTag("Walker");
-        float closestDistance = float.MaxValue;
-
-        foreach (var walker in walkers) {
-            float dist = Vector3.Distance(transform.position, walker.transform.position);
-            if (dist < closestDistance) {
-                closestDistance = dist;
-                targetWalker = walker.transform;
-            }
-        }
+        FindNearestWalker();
     }
 
     /// <summary>
@@ -78,6 +69,7 @@ public class SpaceInvaderMovement : MonoBehaviour {
         if (targetWalker == null || targetWalker.gameObject == null) {
             isDiving = false;
             targetWalker = null;
+            FindNearestWalker();
         }
 
         // If not diving and the walker is far enough below, initiate dive mode
@@ -85,6 +77,7 @@ public class SpaceInvaderMovement : MonoBehaviour {
             float yDiff = transform.position.y - targetWalker.position.y;
             if (yDiff <= 40f) {
                 isDiving = true;
+                moveSpeed = moveSpeed * (1 + enemyHealth.gameManager.currentWave*0.025f);
                 nextDiveTime = Time.time;
                 enemyHealth.FlashColor();
             }
@@ -195,5 +188,25 @@ public class SpaceInvaderMovement : MonoBehaviour {
             if (shadowProjector.gameObject.activeSelf)
                 shadowProjector.gameObject.SetActive(false);
         }
+    }
+
+    private void FindNearestWalker() {
+        GameManager gm = enemyHealth?.gameManager;
+        if (gm == null || gm.activeWalkers.Count == 0) return;
+
+        float closestDistance = float.MaxValue;
+        Transform closest = null;
+
+        foreach (var walker in gm.activeWalkers) {
+            if (walker == null) continue;
+
+            float dist = Vector3.Distance(transform.position, walker.transform.position);
+            if (dist < closestDistance) {
+                closestDistance = dist;
+                closest = walker.transform;
+            }
+        }
+
+        targetWalker = closest;
     }
 }

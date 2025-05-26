@@ -16,6 +16,7 @@ public class PanicWalkerHealth : MonoBehaviour {
     [SerializeField] private Sprite[] damageSprites;
     [SerializeField] private Color hitFlashColor = Color.red;
     [SerializeField] private float hitFlashDuration = 0.1f;
+    [SerializeField] private ParticleSystem bloodParticle;
     private Color originalColor;
 
     [Header("Death")]
@@ -86,8 +87,9 @@ public class PanicWalkerHealth : MonoBehaviour {
                 Color.orange
             );
 
+            bloodParticle.Emit(35);
             FlashColor(hitFlashColor);
-            walkerNav?.PauseAndRestartMovement(1f);
+            //walkerNav?.PauseAndRestartMovement(1f);
 
             AudioManager.Instance.PlaySFX(hitSound);
 
@@ -101,6 +103,7 @@ public class PanicWalkerHealth : MonoBehaviour {
                 Color.red
             );
 
+            bloodParticle.Emit(50);
             AudioManager.Instance.PlaySFX(dieSound);
             Die();
         }
@@ -115,6 +118,7 @@ public class PanicWalkerHealth : MonoBehaviour {
         string message = gameManager.messagePool.GetRandomNarrativeDeathMessage(walkerName);
         gameManager.uiManager.ShowWalkerDeathMessage(message);
 
+        walkerNav?.WalkerDie();
         gameManager.AdjustWalkerCount(-1);
         Destroy(gameObject);
     }

@@ -68,8 +68,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Ich bin ein Toter Walker
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 08ad8e1508bba89418ec124f7d6a2ee5, type: 2}
-  m_sharedMaterial: {fileID: -3057356323584434936, guid: 08ad8e1508bba89418ec124f7d6a2ee5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b4adad4869727384baddce35f45fe2d2, type: 2}
+  m_sharedMaterial: {fileID: -3057356323584434936, guid: b4adad4869727384baddce35f45fe2d2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

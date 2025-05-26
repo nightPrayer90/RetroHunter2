@@ -316,7 +316,7 @@ public class UIManager : MonoBehaviour {
     }
 
     private IEnumerator DelayedResumeRequest() {
-        AudioManager.Instance.PlaySFX(SoundIndexKey.openSnorblesUI);
+        //AudioManager.Instance.PlaySFX(SoundIndexKey.openSnorblesUI);
         ShowPlayerHUD();
 
         yield return new WaitForSecondsRealtime(1.5f);

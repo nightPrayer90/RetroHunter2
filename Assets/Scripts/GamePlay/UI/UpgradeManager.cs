@@ -29,6 +29,7 @@ public class UpgradeManager : MonoBehaviour {
     public float reloadSpeedMult = 1.0f;
     public int maxAmmoBonus = 0;
     public float noAmmoUseChance = 0.0f;
+    public float ricochetChance = 0.0f;
 
     [Header("Combo Upgrades")]
     public float comboFillBonus = 0.0f;
@@ -170,6 +171,9 @@ public class UpgradeManager : MonoBehaviour {
                 doubleHuntRank = doubleHuntRank == 0f ? 0.25f : doubleHuntRank * 1.25f;
                 doubleHuntRank = Mathf.Min(doubleHuntRank, 0.95f);
                 break;
+            case UpgradeType.RicochetChance:
+                ricochetChance += 0.03f;
+                break;
         }
     }
 
@@ -211,6 +215,9 @@ public class UpgradeManager : MonoBehaviour {
             case UpgradeType.DoubleExpChance:
                 float nextExp = doubleHuntRank == 0f ? 0.25f : doubleHuntRank * 1.25f;
                 return statusUI.AsPercent(Mathf.Min(nextExp, 0.95f));
+
+            case UpgradeType.RicochetChance:
+                return statusUI.AsPercent(ricochetChance + 0.03f);
 
             default:
                 return string.Empty;

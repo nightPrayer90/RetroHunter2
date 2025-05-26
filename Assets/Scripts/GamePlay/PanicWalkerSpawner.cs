@@ -64,6 +64,7 @@ public class PanicWalkerSpawner : MonoBehaviour {
                     PanicWalkerHealth health = walker.GetComponent<PanicWalkerHealth>();
                     health.SetGameManager(gameManager);
                     health.SetWalkerName(GenerateWalkerName());
+                    gameManager.activeWalkers.Add(health);
 
                     waveAdd++;
                 }
@@ -98,7 +99,8 @@ public class PanicWalkerSpawner : MonoBehaviour {
         PanicWalkerHealth health = snorble.GetComponent<PanicWalkerHealth>();
         if (health != null) {
             health.SetGameManager(gameManager);
-            health.SetWalkerName(type.ToString());
+            health.SetWalkerName(GenerateWalkerName());
+            gameManager.activeWalkers.Add(health);
         }
 
         // Update portal materials

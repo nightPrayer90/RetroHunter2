@@ -13,6 +13,12 @@ public class MainMenuUI : MonoBehaviour {
     [SerializeField] private CanvasGroup creditsGroup;
     [SerializeField] private float creditsFadeDuration = 0.1f;
 
+    [SerializeField] private UnityEngine.UI.Toggle fullscreenToggle;
+    [SerializeField] private UnityEngine.UI.Toggle vSyncToggle;
+
+    private const string PREF_FULLSCREEN = "FullscreenEnabled";
+    private const string PREF_VSYNC = "VSyncEnabled";
+
     private MainMenuState currentState = MainMenuState.Menu;
 
     private void Start() {
@@ -28,6 +34,21 @@ public class MainMenuUI : MonoBehaviour {
             storedName = GenerateFallbackName();
         }
         nameInputField.text = storedName;
+
+        // Load and apply preferences
+        bool fullscreen = PlayerPrefs.GetInt(PREF_FULLSCREEN, 1) == 1;
+        bool vSync = PlayerPrefs.GetInt(PREF_VSYNC, 1) == 1;
+
+        Screen.fullScreen = fullscreen;
+        QualitySettings.vSyncCount = vSync ? 1 : 0;
+
+        // Update toggles
+        if (fullscreenToggle != null)
+            fullscreenToggle.isOn = fullscreen;
+
+        if (vSyncToggle != null)
+            vSyncToggle.isOn = vSync;
+
 
         AnimatePanels();
     }
@@ -95,5 +116,38 @@ public class MainMenuUI : MonoBehaviour {
         creditsGroup.blocksRaycasts = false;
         creditsGroup.interactable = false;
         creditsGroup.DOFade(0f, creditsFadeDuration);
+    }
+
+    // <summary>
+    /// Toggles fullscreen mode on or off.
+    /// </summary>
+    public void ToggleFullscreen(bool isFullscreen) {
+        AudioManager.Instance.PlaySFX(SoundIndexKey.KelvinShooting);
+        Screen.fullScreen = isFullscreen;
+        PlayerPrefs.SetInt(PREF_FULLSCREEN, isFullscreen ? 1 : 0);
+        PlayerPrefs.Save();
+    }
+
+    /// <summary>
+    /// Toggles V-Sync on or off.
+    /// </summary>
+
+    public void ToggleVSync(bool isEnabled) {
+        AudioManager.Instance.PlaySFX(SoundIndexKey.KelvinShooting);
+        QualitySettings.vSyncCount = isEnabled ? 1 : 0;
+        PlayerPrefs.SetInt(PREF_VSYNC, isEnabled ? 1 : 0);
+        PlayerPrefs.Save();
+    }
+
+    /// <summary>
+    /// Quits the game. Works in builds, ignored in editor.
+    /// </summary>
+    public void QuitGame() {
+        Debug.Log("Quit requested.");
+        Application.Quit();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 }

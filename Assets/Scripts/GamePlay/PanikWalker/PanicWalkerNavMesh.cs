@@ -57,9 +57,15 @@ public class PanicWalkerNavMesh : MonoBehaviour {
 
         yield return new WaitForSeconds(delay);
 
-        agent.isStopped = false;
+        if (agent != null && agent.isActiveAndEnabled && agent.isOnNavMesh) {
+            agent.isStopped = false;
 
-        PickNewDestination();
-        cooldownTimer = destinationCooldown;
+            PickNewDestination();
+            cooldownTimer = destinationCooldown;
+        }
+    }
+
+    public void WalkerDie() {
+        StopAllCoroutines();
     }
 }

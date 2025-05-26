@@ -24,7 +24,7 @@ public class EnemyFlyToCenterAndExplode : MonoBehaviour {
     [SerializeField] private LayerMask environmentLayer;
     [SerializeField] private float projectorDepth = 50f;
 
-    private Transform target;
+    [SerializeField]  private Transform target;
     private bool hasEnteredAttackMode = false;
 
 

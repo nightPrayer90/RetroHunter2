@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Wave10
   m_EditorClassIdentifier: 
   maxEnemiesThisWave: 25
-  delayBeforeNextSpawn: 2
+  delayBeforeNextSpawn: 1.5
   spawnEntries:
   - enemyType: 2
     spawnChance: 100
-    assignTargetOnSpawn: 0
+    assignTargetOnSpawn: 1

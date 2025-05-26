@@ -20,4 +20,4 @@ MonoBehaviour:
     assignTargetOnSpawn: 0
   - enemyType: 2
     spawnChance: 7
-    assignTargetOnSpawn: 0
+    assignTargetOnSpawn: 1

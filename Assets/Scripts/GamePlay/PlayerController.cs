@@ -103,6 +103,11 @@ public class PlayerController : MonoBehaviour {
                     crosshairController.FlashCrosshair(Color.green);
                 }
 
+                float chance = gameManager.upgradeManager.ricochetChance;
+                if (Random.value < chance) {
+                    StartCoroutine(DelayedChainHit(hit.point, hit.collider));
+                }
+
                 // Add force if Rigidbody is present
                 Rigidbody rb = hit.collider.attachedRigidbody;
                 if (rb != null && !rb.isKinematic) {
@@ -123,11 +128,27 @@ public class PlayerController : MonoBehaviour {
             }
         }
         else {
-            //Debug.Log("Raycast missed – nothing hit.");
             crosshairController.FlashCrosshair(new Color(0.8f, 0.8f, 0.8f)); // Light gray
         }
 
         StartCoroutine(ShootCooldown());
+    }
+
+    private IEnumerator DelayedChainHit(Vector3 origin, Collider originalHit) {
+        yield return new WaitForSeconds(0.15f); 
+
+        float chainHitRadius = 40;
+        Collider[] hits = Physics.OverlapSphere(origin, chainHitRadius, LayerMask.GetMask("Enemy"));
+
+        foreach (var col in hits) {
+            if (col == originalHit) continue;
+
+            EnemyHealth extraHealth = col.GetComponent<EnemyHealth>();
+            if (extraHealth != null) {
+                extraHealth.TakeDamage(1);
+                break; 
+            }
+        }
     }
 
     private IEnumerator ShootCooldown() {

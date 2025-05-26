@@ -5,6 +5,7 @@
 using RetroHunter2;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// Controls the overall game flow: timer, waves, score, combo system and PanicWalkers.
@@ -51,6 +52,7 @@ public class GameManager : MonoBehaviour {
     public PanicWalkerMessagePool messagePool;
     [SerializeField] private PanicWalkerSpawner walkerSpawner;
     [SerializeField] private int initialWalkerCount = 20;
+    public List<PanicWalkerHealth> activeWalkers = new();
     private int totalPanicWalkers = 0;
 
 
@@ -83,10 +85,16 @@ public class GameManager : MonoBehaviour {
 
         if (waveTimeRemaining <= 0f) {
             waveTimeRemaining = 0f;
-            OpenUpgradeMenu();
 
-            ResetCombo();
-            uiManager.SetComboVisual(0f, 1f, false);
+            if (CheckWalkerListIntegrity() == true) {
+                TriggerGameOver();
+            }
+            else {
+                OpenUpgradeMenu();
+
+                ResetCombo();
+                uiManager.SetComboVisual(0f, 1f, false);
+            }
         }
         else {
             UpdateComboState();
@@ -228,6 +236,10 @@ public class GameManager : MonoBehaviour {
         playerController.InstantReload();
         currentWave++;
         waveTimeRemaining = waveDuration + upgradeManager.waveTimeBonus;
+
+        int extraTimeSteps = currentWave / 5;
+        waveTimeRemaining += extraTimeSteps * 5f;
+
         uiManager.UpdateWaveTimeDisplay();
         uiManager.ShowPlayerHUD();
         StartCoroutine(BeginWave());
@@ -328,6 +340,19 @@ public class GameManager : MonoBehaviour {
         ppManager.UpdateVignetteIntensity(totalPanicWalkers);
         uiManager.UpdateWalkerCountUI(totalPanicWalkers);
         StartNextWave();
+    }
+
+    public bool CheckWalkerListIntegrity() {
+        for (int i = activeWalkers.Count - 1; i >= 0; i--) {
+            if (activeWalkers[i] == null) {
+                activeWalkers.RemoveAt(i);
+            }
+        }
+
+        if (activeWalkers.Count <= 0) {
+            return true;
+        }
+        return false;
     }
 
     /* **************************************************************************** */

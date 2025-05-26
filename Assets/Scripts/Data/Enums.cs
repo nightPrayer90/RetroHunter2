@@ -63,7 +63,8 @@ namespace RetroHunter2 {
         EnemySpawnRate,
         ScoreBonus,
         DoubleScoreChance,
-        DoubleExpChance
+        DoubleExpChance,
+        RicochetChance
     }
 
     public enum SceneKey {

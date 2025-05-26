@@ -3429,7 +3429,7 @@ MonoBehaviour:
     threatened.\r\n\r\nNasty blocky things from above are \ndropping bombs, lasers
     and bad vibes.  \r\nThey want to flatten our small islands, and \nfrankly...
     we're not cut out for combat.  \r\nYou, however, seem terrifying - in a good
-    way!"
+    \nway!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b4adad4869727384baddce35f45fe2d2, type: 2}
   m_sharedMaterial: {fileID: -3057356323584434936, guid: b4adad4869727384baddce35f45fe2d2, type: 2}
